@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "crop-health-api"
+version = "0.1.0"
+description = "API for crop health model"
+authors = ["Gil Tinde <gil.tinde@knowit.no>"]
+license = "Apache-2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.111.0"
+uvicorn = "^0.30.1"
+requests = "^2.32.3"
+pydantic-settings = "^2.3.3"
+pydantic = "^2.7.4"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+pytest = "^8.2.2"
+isort = "^5.13.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"

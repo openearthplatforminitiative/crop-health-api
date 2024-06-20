@@ -9,12 +9,10 @@ supported_languages = {"cURL": "sh", "JavaScript": "js", "Python": "py"}
 
 
 def custom_openapi_gen(openapi_schema: dict, example_code_dir: Path):
-    openapi_schema["info"]["x-logo"] = {
-        "url": f"{settings.api_url}/static/icons/open-epi-logo.svg"
-    }
     openapi_schema["info"]["title"] = settings.title
     openapi_schema["info"]["version"] = settings.version
     openapi_schema["info"]["description"] = settings.api_description
+    openapi_schema["servers"] = [{"url": settings.api_url}]
 
     # Manually modify the schema for the /predictions/{model_name} endpoint
     endpoint_path = "/predictions/{model_name}"

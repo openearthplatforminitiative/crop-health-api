@@ -5,7 +5,6 @@ from contextlib import asynccontextmanager
 import requests
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
 
 from crop_health_api.custom_openapi import custom_openapi_gen
 from crop_health_api.settings import settings
@@ -57,10 +56,11 @@ async def app_lifespan(app):
     yield
 
 
-app = FastAPI(openapi_url=None, lifespan=app_lifespan)
-
-# The OpenEPI logo needs to be served as a static file since it is referenced in the OpenAPI schema
-app.mount("/static", StaticFiles(directory="crop_health_api/assets"), name="static")
+app = FastAPI(
+    openapi_url=None,
+    lifespan=app_lifespan,
+    root_path=settings.api_root_path,
+)
 
 
 @app.get("/openapi.json")

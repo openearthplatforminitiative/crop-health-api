@@ -1,0 +1,1 @@
+curl -X POST $api_url/predictions/multi-HLT -T cocoa.jpg

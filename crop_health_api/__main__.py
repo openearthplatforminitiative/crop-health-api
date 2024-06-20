@@ -45,11 +45,17 @@ async def app_lifespan(app):
     if response.status_code == 200:
         openapi_json = response.json()
         # Remove specific endpoints if needed
-        endpoints_to_keep = ["/predictions/{model_name}", "/ping"]
+        endpoints_to_keep = ["/ping"]
         all_endpoints = list(openapi_json["paths"].keys())
         for endpoint in all_endpoints:
             if endpoint not in endpoints_to_keep:
                 del openapi_json["paths"][endpoint]
+
+        # Initializing custom endpoints we want to show in the openapi docs
+        custom_endpoints = ["/predictions/binary", "/predictions/single-HLT", "/predictions/multi-HLT"]
+        for endpoint in custom_endpoints:
+            openapi_json["paths"][endpoint] = { "post": { "responses": {}} }
+
         openapi_json = custom_openapi_gen(openapi_json, example_code_dir)
         openapi_json_cache = openapi_json
     else:

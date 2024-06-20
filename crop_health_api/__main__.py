@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 
 import requests
 from fastapi import FastAPI, HTTPException
+from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.responses import HTMLResponse
 
 from crop_health_api.custom_openapi import custom_openapi_gen
@@ -85,6 +86,13 @@ async def redoc():
     """
     return redoc_html
 
+@app.get("/docs", include_in_schema=False)
+async def docs():
+    return get_swagger_ui_html(
+        openapi_url=f"{settings.api_root_path}/openapi.json",
+        title="Geocoder API",
+        swagger_favicon_url="https://www.openepi.io/favicon.ico",
+    )
 
 if __name__ == "__main__":
     import uvicorn

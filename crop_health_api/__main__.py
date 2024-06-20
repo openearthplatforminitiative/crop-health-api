@@ -52,9 +52,13 @@ async def app_lifespan(app):
                 del openapi_json["paths"][endpoint]
 
         # Initializing custom endpoints we want to show in the openapi docs
-        custom_endpoints = ["/predictions/binary", "/predictions/single-HLT", "/predictions/multi-HLT"]
+        custom_endpoints = [
+            "/predictions/binary",
+            "/predictions/single-HLT",
+            "/predictions/multi-HLT",
+        ]
         for endpoint in custom_endpoints:
-            openapi_json["paths"][endpoint] = { "post": { "responses": {}} }
+            openapi_json["paths"][endpoint] = {"post": {"responses": {}}}
 
         openapi_json = custom_openapi_gen(openapi_json, example_code_dir)
         openapi_json_cache = openapi_json
@@ -92,6 +96,7 @@ async def redoc():
     """
     return redoc_html
 
+
 @app.get("/docs", include_in_schema=False)
 async def docs():
     return get_swagger_ui_html(
@@ -99,6 +104,7 @@ async def docs():
         title="Geocoder API",
         swagger_favicon_url="https://www.openepi.io/favicon.ico",
     )
+
 
 if __name__ == "__main__":
     import uvicorn

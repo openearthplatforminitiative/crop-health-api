@@ -19,14 +19,14 @@ spec:
     spec:
       containers:
       - name: crop-health-fastapi
-        image: ghcr.io/openearthplatforminitiative/crop-health-api-fastapi:0.0.3
+        image: ghcr.io/openearthplatforminitiative/crop-health-api-fastapi:0.0.4
         ports:
           - containerPort: 5000
         env:
           - name: API_ROOT_PATH
             value: "/crop-health"
           - name: VERSION
-            value: 0.0.3
+            value: 0.0.4
           - name: API_DOMAIN
             valueFrom:
               configMapKeyRef:

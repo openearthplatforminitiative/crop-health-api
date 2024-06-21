@@ -148,7 +148,10 @@ def custom_openapi_gen(openapi_schema: dict, example_code_dir: Path):
                 "type": "object",
                 "properties": {
                     "HLT": {"type": "number", "description": "Healthy"},
-                    "CBSD": {"type": "number", "description": "Cassava Brown Streak Disease"},
+                    "CBSD": {
+                        "type": "number",
+                        "description": "Cassava Brown Streak Disease",
+                    },
                     "CMD": {"type": "number", "description": "Cassava Mosaic Disease"},
                     "MLN": {"type": "number", "description": "Maize Lethal Necrosis"},
                     "MSV": {"type": "number", "description": "Maize Streak Virus"},
@@ -159,7 +162,10 @@ def custom_openapi_gen(openapi_schema: dict, example_code_dir: Path):
                     "BS": {"type": "number", "description": "Black Sigatoka"},
                     "FW": {"type": "number", "description": "Fusarium Wilt Race 1"},
                     "ANT": {"type": "number", "description": "Anthracnose"},
-                    "CSSVD": {"type": "number", "description": "Cocoa Swollen Shoot Virus Disease"},
+                    "CSSVD": {
+                        "type": "number",
+                        "description": "Cocoa Swollen Shoot Virus Disease",
+                    },
                 },
                 "example": {
                     "HLT": 0.9110000729560852,
@@ -173,11 +179,23 @@ def custom_openapi_gen(openapi_schema: dict, example_code_dir: Path):
                 "type": "object",
                 "properties": {
                     "HLT_cassava": {"type": "number", "description": "Healthy Cassava"},
-                    "CBSD_cassava": {"type": "number", "description": "Cassava Brown Streak Disease"},
-                    "CMD_cassava": {"type": "number", "description": "Cassava Mosaic Disease"},
-                    "MLN_maize": {"type": "number", "description": "Maize Lethal Necrosis"},
+                    "CBSD_cassava": {
+                        "type": "number",
+                        "description": "Cassava Brown Streak Disease",
+                    },
+                    "CMD_cassava": {
+                        "type": "number",
+                        "description": "Cassava Mosaic Disease",
+                    },
+                    "MLN_maize": {
+                        "type": "number",
+                        "description": "Maize Lethal Necrosis",
+                    },
                     "HLT_maize": {"type": "number", "description": "Healthy Maize"},
-                    "MSV_maize": {"type": "number", "description": "Maize Streak Virus"},
+                    "MSV_maize": {
+                        "type": "number",
+                        "description": "Maize Streak Virus",
+                    },
                     "FAW_maize": {"type": "number", "description": "Fall Armyworm"},
                     "MLB_maize": {"type": "number", "description": "Maize Leaf Blight"},
                     "HLT_beans": {"type": "number", "description": "Healthy Beans"},
@@ -185,10 +203,16 @@ def custom_openapi_gen(openapi_schema: dict, example_code_dir: Path):
                     "ALS_beans": {"type": "number", "description": "Angular Leaf Spot"},
                     "HLT_bananas": {"type": "number", "description": "Healthy Bananas"},
                     "BS_bananas": {"type": "number", "description": "Black Sigatoka"},
-                    "FW_bananas": {"type": "number", "description": "Fusarium Wilt Race 1"},
+                    "FW_bananas": {
+                        "type": "number",
+                        "description": "Fusarium Wilt Race 1",
+                    },
                     "HLT_cocoa": {"type": "number", "description": "Healthy Cocoa"},
                     "ANT_cocoa": {"type": "number", "description": "Anthracnose"},
-                    "CSSVD_cocoa": {"type": "number", "description": "Cocoa Swollen Shoot Virus Disease"},
+                    "CSSVD_cocoa": {
+                        "type": "number",
+                        "description": "Cocoa Swollen Shoot Virus Disease",
+                    },
                 },
                 "example": {
                     "HLT_cocoa": 0.27080613374710083,

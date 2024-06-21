@@ -85,7 +85,7 @@ spec:
     - websecure
   routes:
   - kind: Rule
-    match: Path(`/crop-health/redoc`) || Path(`/crop-health/openapi.json`) || PathPrefix(`/crop-health/static`)
+    match: Path(`/crop-health/redoc`) || Path(`/crop-health/openapi.json`) || Path(`/crop-health/docs`)
     priority: 2
     services:
     - kind: Service

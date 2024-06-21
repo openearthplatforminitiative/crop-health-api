@@ -122,9 +122,7 @@ def custom_openapi_gen(openapi_schema: dict, example_code_dir: Path):
 
             # Successful reponse
             openapi_schema["paths"][endpoint_path][method]["responses"]["200"] = {
-                "description": (
-                    "Predicted class confidences, all summing to 1.0. Actual class names and number of returned classes may vary.",
-                ),
+                "description": "Predicted class confidences, all summing to 1.0.",
                 "content": {
                     "application/json": {
                         "schema": {

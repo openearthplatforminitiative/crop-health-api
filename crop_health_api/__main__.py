@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 
 import requests
 from fastapi import FastAPI, HTTPException
+from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.responses import HTMLResponse
 
 from crop_health_api.custom_openapi import custom_openapi_gen
@@ -44,11 +45,21 @@ async def app_lifespan(app):
     if response.status_code == 200:
         openapi_json = response.json()
         # Remove specific endpoints if needed
-        endpoints_to_keep = ["/predictions/{model_name}", "/ping"]
+        endpoints_to_keep = ["/ping"]
         all_endpoints = list(openapi_json["paths"].keys())
         for endpoint in all_endpoints:
             if endpoint not in endpoints_to_keep:
                 del openapi_json["paths"][endpoint]
+
+        # Initializing custom endpoints we want to show in the openapi docs
+        custom_endpoints = [
+            "/predictions/binary",
+            "/predictions/single-HLT",
+            "/predictions/multi-HLT",
+        ]
+        for endpoint in custom_endpoints:
+            openapi_json["paths"][endpoint] = {"post": {"responses": {}}}
+
         openapi_json = custom_openapi_gen(openapi_json, example_code_dir)
         openapi_json_cache = openapi_json
     else:
@@ -84,6 +95,15 @@ async def redoc():
     </html>
     """
     return redoc_html
+
+
+@app.get("/docs", include_in_schema=False)
+async def docs():
+    return get_swagger_ui_html(
+        openapi_url=f"{settings.api_root_path}/openapi.json",
+        title="Geocoder API",
+        swagger_favicon_url="https://www.openepi.io/favicon.ico",
+    )
 
 
 if __name__ == "__main__":

@@ -44,7 +44,7 @@ async def app_lifespan(app):
     response = requests.options(f"http://{torchserve_domain}:8080", timeout=10)
     if response.status_code == 200:
         openapi_json = response.json()
-        # Remove specific endpoints if needed
+        # Remove specific endpoints if needed ...
         endpoints_to_keep = ["/ping"]
         all_endpoints = list(openapi_json["paths"].keys())
         for endpoint in all_endpoints:

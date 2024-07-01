@@ -127,7 +127,7 @@ def custom_openapi_gen(openapi_schema: dict, example_code_dir: Path):
                     "application/json": {
                         "schema": {
                             "type": "object",
-                            "$ref": f"#/components/schemas/{type_predicate}HealthPredictionResponse",
+                            "$ref": f"#/components/schemas/{type_predicate}PredictionResponse",
                         }
                     }
                 },
@@ -136,7 +136,7 @@ def custom_openapi_gen(openapi_schema: dict, example_code_dir: Path):
     # The returntypes of each endpoint
     openapi_schema["components"] = {
         "schemas": {
-            "BinaryHealthPredictionResponse": {
+            "BinaryPredictionResponse": {
                 "type": "object",
                 "properties": {
                     "HLT": {"type": "number", "description": "Healthy"},
@@ -144,7 +144,7 @@ def custom_openapi_gen(openapi_schema: dict, example_code_dir: Path):
                 },
                 "example": {"HLT": 0.85, "NOT_HLT": 0.15},
             },
-            "SingleHLTHealthPredictionResponse": {
+            "SingleHLTPredictionResponse": {
                 "type": "object",
                 "properties": {
                     "HLT": {"type": "number", "description": "Healthy"},
@@ -175,7 +175,7 @@ def custom_openapi_gen(openapi_schema: dict, example_code_dir: Path):
                     "MSV": 0.001886515412479639,
                 },
             },
-            "MultiHLTHealthPredictionResponse": {
+            "MultiHLTPredictionResponse": {
                 "type": "object",
                 "properties": {
                     "HLT_cassava": {"type": "number", "description": "Healthy Cassava"},

@@ -18,10 +18,10 @@ openapi_json_cache = None
 async def app_lifespan(app):
     global openapi_json_cache
     # Try to reach TorchServe's /ping endpoint with retries
-    # If running docker containers locally, use "http://torchserve:8080" given
-    # that "torchserve" is the name of the container running custom TorchServe
+    # If running docker containers locally, use "http://local_torchserve:8080" given
+    # that "local_torchserve" is the name of the container running custom TorchServe
     if settings.api_domain == "localhost":
-        torchserve_domain = "torchserve"
+        torchserve_domain = "local_torchserve"
     else:
         torchserve_domain = "localhost"
     max_retries = 10

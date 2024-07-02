@@ -9,5 +9,5 @@ with Client() as client:
     )
 
     data_multi_HLT = response_multi_HLT.json()
-    # Print the prediction for the MLN_maize class
-    print(data_multi_HLT["MLN_maize"])
+    # Print the top 5 predictions
+    print(data_multi_HLT)

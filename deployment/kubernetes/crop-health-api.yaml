@@ -19,14 +19,14 @@ spec:
     spec:
       containers:
       - name: crop-health-fastapi
-        image: ghcr.io/openearthplatforminitiative/crop-health-api-fastapi:0.1.0
+        image: ghcr.io/openearthplatforminitiative/crop-health-api-fastapi:0.1.1
         ports:
           - containerPort: 5000
         env:
           - name: API_ROOT_PATH
             value: "/crop-health"
           - name: VERSION
-            value: 0.1.0
+            value: 0.1.1
           - name: API_DOMAIN
             valueFrom:
               configMapKeyRef:
@@ -34,7 +34,7 @@ spec:
                 key: api_domain
 
       - name: crop-health-torchserve
-        image: ghcr.io/openearthplatforminitiative/crop-health-api-torchserve:0.1.0
+        image: ghcr.io/openearthplatforminitiative/crop-health-api-torchserve:0.1.1
         ports:
           - containerPort: 8080 # Inference API
           - containerPort: 8081 # Management API
@@ -43,7 +43,7 @@ spec:
           - name: API_ROOT_PATH
             value: "/crop-health"
           - name: VERSION
-            value: 0.1.0
+            value: 0.1.1
           - name: API_DOMAIN
             valueFrom:
               configMapKeyRef:

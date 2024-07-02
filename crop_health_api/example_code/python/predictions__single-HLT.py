@@ -9,5 +9,5 @@ with Client() as client:
     )
 
     data_single_HLT = response_single_HLT.json()
-    # Print the top 5 predictions
-    print(data_single_HLT)
+    # Print the prediction for the CBSD class
+    print(data_single_HLT["CBSD"])

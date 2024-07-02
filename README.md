@@ -13,14 +13,14 @@ docker network create my-network
 Now, in the `torch_serve/docker` folder, run one of the following to build the TorchServe image.
 ```
 # For most CPUs
-DOCKER_BUILDKIT=1 docker build --file Dockerfile -t pytorch/torchserve:latest-cpu --target production-image  ../
+DOCKER_BUILDKIT=1 docker build --file Dockerfile -t crop_torch_serve --target production-image  ../
 
 # For arm CPU
-docker buildx build --platform=linux/amd64 --file Dockerfile -t pytorch/torchserve:latest-cpu --target production-image  ../
+docker buildx build --platform=linux/amd64 --file Dockerfile -t crop_torch_serve --target production-image  ../
 ```
 Then run the container:
 ```
-docker run --rm -it --network my-network --name local_torchserve -p 8080:8080 -p 8081:8081 -p 8082:8082 pytorch/torchserve:latest-cpu
+docker run --rm -it --network my-network --name local_torchserve -p 8080:8080 -p 8081:8081 -p 8082:8082 crop_torch_serve
 ```
 
 In the root of `crop-health-api`, run the following to build the FastAPI image:

@@ -20,7 +20,7 @@ docker buildx build --platform=linux/amd64 --file Dockerfile -t pytorch/torchser
 ```
 Then run the container:
 ```
-docker run --rm -it --network my-network --name torchserve -p 8080:8080 -p 8081:8081 -p 8082:8082 pytorch/torchserve:latest-cpu
+docker run --rm -it --network my-network --name local_torchserve -p 8080:8080 -p 8081:8081 -p 8082:8082 pytorch/torchserve:latest-cpu
 ```
 
 In the root of `crop-health-api`, run the following to build the FastAPI image:

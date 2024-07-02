@@ -10,9 +10,13 @@ Start by creating a local network with docker, this will allow the containers to
 docker network create my-network
 ```
 
-Now, in the `torch_serve/docker` folder, run the following to build the TorchServe image:
+Now, in the `torch_serve/docker` folder, run one of the following to build the TorchServe image.
 ```
+# For most CPUs
 DOCKER_BUILDKIT=1 docker build --file Dockerfile -t pytorch/torchserve:latest-cpu --target production-image  ../
+
+# For arm CPU
+docker buildx build --platform=linux/amd64 --file Dockerfile -t pytorch/torchserve:latest-cpu --target production-image  ../
 ```
 Then run the container:
 ```

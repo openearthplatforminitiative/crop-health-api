@@ -11,6 +11,6 @@ fetch.then(async fetch => {
       }
   );
   const data_multi = await response_multi.json();
-  // Print the predicted value for the MLN_maize class
+  // Print the prediction for the MLN_maize class
   console.log(data_multi.MLN_maize);
 });

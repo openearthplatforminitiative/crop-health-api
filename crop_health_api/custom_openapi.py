@@ -196,7 +196,7 @@ def custom_openapi_gen(openapi_schema: dict, example_code_dir: Path):
                     "MSV": 6.82656491335365e-07,
                     "MLB": 1.0789210591610754e-07,
                     "BS": 1.5242493489608933e-08,
-                    "MLN": 1.5041418111039206e-09
+                    "MLN": 1.5041418111039206e-09,
                 },
             },
             "MultiHLTPredictionResponse": {
@@ -274,7 +274,7 @@ def custom_openapi_gen(openapi_schema: dict, example_code_dir: Path):
                     "FW_bananas": 2.3203281671158038e-05,
                     "MLB_maize": 2.0815876268898137e-05,
                     "MLN_maize": 8.257627115426658e-08,
-                    "BS_bananas": 9.579996351760656e-09
+                    "BS_bananas": 9.579996351760656e-09,
                 },
             },
         }

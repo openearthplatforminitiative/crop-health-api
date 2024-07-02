@@ -33,11 +33,11 @@ docker run --rm -it --network my-network -p 127.0.0.1:5000:5000 crop_fast_api
 ```
 
 Now requests can be sent to:
-http://localhost:8080/predictions/binary
-http://localhost:8080/predictions/single-HLT
-http://localhost:8080/predictions/multi-HLT
+- http://localhost:8080/predictions/binary
+- http://localhost:8080/predictions/single-HLT
+- http://localhost:8080/predictions/multi-HLT
 
-And the documentation can be found here
-http://localhost:5000/redoc
+And the documentation can be found at:
+- http://localhost:5000/redoc
 
 Example request: `curl -X POST http://localhost:8080/predictions/binary -T cocoa.jpg`

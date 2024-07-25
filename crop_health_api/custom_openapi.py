@@ -126,7 +126,6 @@ def custom_openapi_gen(openapi_schema: dict, example_code_dir: Path):
                 "content": {
                     "application/json": {
                         "schema": {
-                            "type": "object",
                             "$ref": f"#/components/schemas/{type_predicate}PredictionResponse",
                         }
                     }

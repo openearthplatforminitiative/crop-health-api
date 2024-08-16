@@ -3,7 +3,7 @@ import pathlib
 from contextlib import asynccontextmanager
 
 import requests
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, Request, UploadFile, HTTPException
 from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.responses import HTMLResponse
 
@@ -104,6 +104,47 @@ async def docs():
         title="Geocoder API",
         swagger_favicon_url="https://www.openepi.io/favicon.ico",
     )
+
+
+@app.post("/predictions/single-HLT")
+async def singleHLT(request: Request):
+    return await torch_request(request, "single-HLT")
+
+
+@app.post("/predictions/multi-HLT")
+async def multiHLT(request: Request):
+    return await torch_request(request, "multi-HLT")
+
+
+@app.post("/predictions/binary")
+async def binary(request: Request):
+    return await torch_request(request, "binary")
+
+
+async def torch_request(request: Request, type):
+    if settings.api_domain == "localhost":
+        torchserve_domain = "local_torchserve"
+    else:
+        torchserve_domain = "localhost"
+    try:
+        # Get file
+        file_content = await request.body()
+
+        # Send the file to TorchServe
+        response = requests.post(
+            f"http://{torchserve_domain}:8080/predictions/{type}",
+            files={"data": file_content},
+        )
+
+        # Check if the request was successful
+        if response.status_code != 200:
+            raise HTTPException(status_code=response.status_code, detail=response.text)
+
+        # Return the response from TorchServe
+        return response.json()
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 if __name__ == "__main__":

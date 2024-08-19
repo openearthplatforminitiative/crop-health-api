@@ -106,6 +106,21 @@ async def docs():
     )
 
 
+@app.get("/ping")
+async def ping():
+    if settings.api_domain == "localhost":
+        torchserve_domain = "local_torchserve"
+    else:
+        torchserve_domain = "localhost"
+    try:
+        response = requests.get(f"http://{torchserve_domain}:8080/ping")
+        if response.status_code != 200:
+            raise HTTPException(status_code=response.status_code, detail=response.text)
+        return response.json()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.post("/predictions/single-HLT")
 async def singleHLT(request: Request):
     return await torch_request(request, "single-HLT")

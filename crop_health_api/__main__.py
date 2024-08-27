@@ -20,15 +20,11 @@ async def app_lifespan(app):
     # Try to reach TorchServe's /ping endpoint with retries
     # If running docker containers locally, use "http://local_torchserve:8080" given
     # that "local_torchserve" is the name of the container running custom TorchServe
-    if settings.api_domain == "localhost":
-        torchserve_domain = "local_torchserve"
-    else:
-        torchserve_domain = "localhost"
     max_retries = 10
     retry_delay = 5  # seconds
     for _ in range(max_retries):
         try:
-            response = requests.get(f"http://{torchserve_domain}:8080/ping")
+            response = requests.get(f"http://{torchserve_domain()}:8080/ping")
             if response.status_code == 200:
                 print("TorchServe is up and running!")
                 break
@@ -41,7 +37,7 @@ async def app_lifespan(app):
                 f"Waiting for TorchServe to be available: {e}. Retrying in {retry_delay} seconds."
             )
             await asyncio.sleep(retry_delay)
-    response = requests.options(f"http://{torchserve_domain}:8080", timeout=10)
+    response = requests.options(f"http://{torchserve_domain()}:8080", timeout=10)
     if response.status_code == 200:
         openapi_json = response.json()
         # Remove specific endpoints if needed
@@ -108,12 +104,8 @@ async def docs():
 
 @app.get("/ping")
 async def ping():
-    if settings.api_domain == "localhost":
-        torchserve_domain = "local_torchserve"
-    else:
-        torchserve_domain = "localhost"
     try:
-        response = requests.get(f"http://{torchserve_domain}:8080/ping")
+        response = requests.get(f"http://{torchserve_domain()}:8080/ping")
         if response.status_code != 200:
             raise HTTPException(status_code=response.status_code, detail=response.text)
         return response.json()
@@ -137,10 +129,6 @@ async def binary(request: Request):
 
 
 async def torch_request(request: Request, type):
-    if settings.api_domain == "localhost":
-        torchserve_domain = "local_torchserve"
-    else:
-        torchserve_domain = "localhost"
     try:
         # Get file
         file_content = await request.body()
@@ -160,6 +148,13 @@ async def torch_request(request: Request, type):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+def torchserve_domain():
+    if settings.api_domain == "localhost":
+        return "local_torchserve"
+    else:
+        return "localhost"
 
 
 if __name__ == "__main__":

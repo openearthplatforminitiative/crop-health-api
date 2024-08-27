@@ -3,12 +3,13 @@ import pathlib
 from contextlib import asynccontextmanager
 
 import requests
-from fastapi import FastAPI, File, Request, UploadFile, HTTPException
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.responses import HTMLResponse
 
 from crop_health_api.custom_openapi import custom_openapi_gen
 from crop_health_api.settings import settings
+from httpx import AsyncClient
 
 example_code_dir = pathlib.Path(__file__).parent / "example_code"
 openapi_json_cache = None
@@ -133,11 +134,13 @@ async def torch_request(request: Request, type):
         # Get file
         file_content = await request.body()
 
+        async with AsyncClient() as client:
+            response = await client.post(
+                f"http://{torchserve_domain()}:8080/predictions/{type}",
+                files={"data": file_content},
+            )
+
         # Send the file to TorchServe
-        response = requests.post(
-            f"http://{torchserve_domain}:8080/predictions/{type}",
-            files={"data": file_content},
-        )
 
         # Check if the request was successful
         if response.status_code != 200:

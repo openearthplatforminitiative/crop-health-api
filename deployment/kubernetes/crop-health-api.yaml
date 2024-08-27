@@ -57,7 +57,7 @@ metadata:
 spec:
   ports:
     - name: fastapi
-      port: 81  # external port number exposed on the service
+      port: 80  # external port number exposed on the service
       targetPort: 5000  # internal port number in the container
   selector:
     app: crop-health-api
@@ -82,11 +82,11 @@ spec:
     - websecure
   routes:
   - kind: Rule
-    match: Path(`/crop-health/redoc`) || Path(`/crop-health/openapi.json`) || Path(`/crop-health/docs`) || PathPrefix(`/crop-health`) && !PathPrefix(`/crop-health/metrics`)
-    priority: 2
+    match: PathPrefix(`/crop-health`) && !PathPrefix(`/crop-health/metrics`)
+    priority: 1
     services:
     - kind: Service
       name: crop-health-api
-      port: 81
+      port: 80
     middlewares:
     - name: stripprefix-crop-health

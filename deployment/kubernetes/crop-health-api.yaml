@@ -19,14 +19,14 @@ spec:
     spec:
       containers:
       - name: crop-health-fastapi
-        image: ghcr.io/openearthplatforminitiative/crop-health-api-fastapi:0.1.11
+        image: ghcr.io/openearthplatforminitiative/crop-health-api-fastapi:0.1.13
         ports:
           - containerPort: 5000
         env:
           - name: API_ROOT_PATH
             value: "/crop-health"
           - name: VERSION
-            value: 0.1.10
+            value: 0.1.13
           - name: API_DOMAIN
             valueFrom:
               configMapKeyRef:
@@ -34,7 +34,7 @@ spec:
                 key: api_domain
 
       - name: crop-health-torchserve
-        image: ghcr.io/openearthplatforminitiative/crop-health-api-torchserve:0.1.11
+        image: ghcr.io/openearthplatforminitiative/crop-health-api-torchserve:0.1.13
         ports:
           - containerPort: 8080 # Inference API
           - containerPort: 8081 # Management API
@@ -43,7 +43,7 @@ spec:
           - name: API_ROOT_PATH
             value: "/crop-health"
           - name: VERSION
-            value: 0.1.11
+            value: 0.1.13
           - name: API_DOMAIN
             valueFrom:
               configMapKeyRef:
@@ -56,11 +56,8 @@ metadata:
   name: crop-health-api
 spec:
   ports:
-    - name: inference-api
-      port: 80
-      targetPort: 8080
     - name: fastapi
-      port: 81  # external port number exposed on the service
+      port: 80  # external port number exposed on the service
       targetPort: 5000  # internal port number in the container
   selector:
     app: crop-health-api
@@ -84,15 +81,6 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - kind: Rule
-    match: Path(`/crop-health/redoc`) || Path(`/crop-health/openapi.json`) || Path(`/crop-health/docs`)
-    priority: 2
-    services:
-    - kind: Service
-      name: crop-health-api
-      port: 81
-    middlewares:
-    - name: stripprefix-crop-health
   - kind: Rule
     match: PathPrefix(`/crop-health`) && !PathPrefix(`/crop-health/metrics`)
     priority: 1

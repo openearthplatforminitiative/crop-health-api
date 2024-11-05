@@ -74,6 +74,20 @@ spec:
     forceSlash: true
 ---
 apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: cors-crop-health
+spec:
+  headers:
+    accessControlAllowMethods:
+      - "GET"
+      - "POST"
+    accessControlAllowHeaders:
+      - "*"
+    accessControlAllowOriginList:
+      - "*"
+---
+apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: crop-health-api
@@ -90,3 +104,4 @@ spec:
       port: 80
     middlewares:
     - name: stripprefix-crop-health
+    - name: cors-crop-health

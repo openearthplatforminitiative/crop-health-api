@@ -96,12 +96,23 @@ spec:
     - websecure
   routes:
   - kind: Rule
-    match: PathPrefix(`/crop-health`) && !PathPrefix(`/crop-health/metrics`)
-    priority: 1
+    match: PathPrefix(`/crop-health`) && !PathPrefix(`/crop-health/metrics`) && HeadersRegexp(`Authorization`, `.+`)
     services:
     - kind: Service
       name: crop-health-api
       port: 80
     middlewares:
     - name: stripprefix-crop-health
-    - name: cors-crop-health
+    - name: traefikmiddleware-cors@kubernetescrd
+    - name: traefikmiddleware-jwt@kubernetescrd
+    - name: traefikmiddleware-rate-limit-registered@kubernetescrd
+  - kind: Rule
+    match: PathPrefix(`/crop-health`) && !PathPrefix(`/crop-health/metrics`) && !HeadersRegexp(`Authorization`, `.+`)
+    services:
+    - kind: Service
+      name: crop-health-api
+      port: 80
+    middlewares:
+    - name: stripprefix-crop-health
+    - name: traefikmiddleware-cors@kubernetescrd
+    - name: traefikmiddleware-rate-limit-anonymous@kubernetescrd
